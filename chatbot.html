@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .chat-container {
+            width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .messages {
+            height: 200px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        .input-container {
+            display: flex;
+        }
+        input {
+            flex: 1;
+            padding: 5px;
+        }
+        button {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="messages" id="messages"></div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Escribe un mensaje...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("userInput");
+            const messages = document.getElementById("messages");
+            const userText = userInput.value;
+            
+            if (userText.trim() === "") return;
+            
+            messages.innerHTML += `<div><strong>Tú:</strong> ${userText}</div>`;
+            userInput.value = "";
+            
+            setTimeout(() => {
+                const botResponse = getBotResponse(userText);
+                messages.innerHTML += `<div><strong>Bot:</strong> ${botResponse}</div>`;
+                messages.scrollTop = messages.scrollHeight;
+            }, 500);
+        }
+
+        function getBotResponse(input) {
+            const responses = {
+                "hola": "¡Hola! ¿Cómo estás?",
+                "cómo estás": "Estoy bien, gracias por preguntar.",
+                "qué puedes hacer": "Puedo responder preguntas básicas. ¡Prueba escribirme algo!"
+            };
+            return responses[input.toLowerCase()] || "No entiendo esa pregunta.";
+        }
+    </script>
+</body>
+</html>
